@@ -1,0 +1,79 @@
+<template>
+  <v-row class="col-6">
+    <v-text-field
+      v-model="dateOfBirth"
+      :rules="dateOfBirthRules"
+      label="Дата рождения"
+      placeholder="дд.мм.гггг"
+      class="datefield"
+      @click="showDatePicker"
+      required
+    ></v-text-field>
+    <v-date-picker
+      v-model="datePicker"
+      v-if="isDatePickerShow"
+      v-click-outside="{
+        handler: showDatePicker,
+        include: includeDateField,
+      }"
+    ></v-date-picker>
+  </v-row>
+</template>
+
+<script>
+import { format } from "date-fns";
+
+export default {
+  name: "Birthday",
+  data() {
+    return {
+      dateOfBirth: "",
+      datePicker: "",
+      dateOfBirthRules: [(v) => this.dateOfBirthValidation(v)],
+      isDatePickerShow: false,
+    };
+  },
+  methods: {
+    includeDateField() {
+      return [document.querySelector(".datefield")];
+    },
+    showDatePicker() {
+      this.isDatePickerShow = !this.isDatePickerShow;
+    },
+    dateOfBirthValidation(v) {
+      if (/[0-3]\d\.[0-1]\d\.[1-2][0-9]\d\d/.test(v)) {
+        let [date, month, year] = v.split(".");
+        if (
+          new Date().getTime() - new Date(year, month - 1, date).getTime() >
+          0
+        ) {
+          if (0 < date && date <= 31) {
+            if (0 < month && month <= 12) {
+              if (1990 < year && year <= new Date().getFullYear()) {
+                return true;
+              } else {
+                return "Некорректно введен год : " + year;
+              }
+            } else {
+              return "Некорректно указан месяц : " + month;
+            }
+          } else {
+            return "Некорректное число : " + date;
+          }
+        } else {
+          return "Путешественник из будущего?";
+        }
+      }
+      return false;
+    },
+  }, //end methods
+  watch: {
+    datePicker: function () {
+      if (this.datePicker) {
+        let [year, month, day] = this.datePicker.split("-");
+        this.dateOfBirth = format(new Date(year, month - 1, day), "dd.MM.yyyy");
+      }
+    },
+  },
+};
+</script>
