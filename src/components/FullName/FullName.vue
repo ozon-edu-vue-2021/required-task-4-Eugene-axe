@@ -1,5 +1,5 @@
 <template>
-  <v-row no-gutters>
+  <v-row>
     <v-text-field
       v-model="surname"
       :rules="surnameRules"
@@ -46,7 +46,7 @@ export default {
   },
   methods: {
     validateCirillic(v) {
-      return /^[а-яё0-9]+$/iu.test(v) || "используйте кириллицу";
+      return /^[а-яё]+$/iu.test(v) || "используйте кириллицу";
     },
   },
 };

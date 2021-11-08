@@ -1,36 +1,37 @@
 <template>
   <v-row class="d-flex">
     <v-text-field
+      ref="citizenshipFieldText"
       v-model="citizenshipText"
+      :rules="citizenshipTextRules"
       label="Гражданство"
       class="flex-grow-1 align-self-start citizenship-textfield"
       @keyup="throttleMethod()"
-      @focus="isShowListItem = true"
+      @keyup.enter="emitCitizen"
+      @click="isShowListItem = true"
       required
+      validate-on-blur
     ></v-text-field>
+
     <v-list
-      max-height="300px"
+      max-height="200px"
       class="overflow-y-auto flex-grow-1"
       v-click-outside="{
-        handler: () => (isShowListItem = false),
+        handler: handlerOutsideClickList,
         include: includeField,
       }"
     >
-      <v-list-item-group v-model="selectedItem" color="primary">
-        <v-subheader v-if="!isShowListItem" @click="isShowListItem = true">
-          Список
-        </v-subheader>
-        <v-list-item
-          v-for="citizenship in citizenshipsList"
-          :key="citizenship.uid"
-          v-show="isShowListItem"
-        >
-          <v-list-item-content>
-            <v-list-item-title
-              v-text="citizenship.nationality"
-            ></v-list-item-title> </v-list-item-content
-        ></v-list-item>
-      </v-list-item-group>
+      <v-list-item
+        v-for="citizenship in citizenshipsList"
+        :key="citizenship.uid"
+        v-show="isShowListItem"
+        @click="handleClickListItem(citizenship)"
+      >
+        <v-list-item-content>
+          <v-list-item-title
+            v-text="citizenship.nationality"
+          ></v-list-item-title> </v-list-item-content
+      ></v-list-item>
     </v-list>
   </v-row>
 </template>
@@ -45,6 +46,12 @@ export default {
     return {
       selectedItem: null,
       citizenshipText: "",
+      citizenshipTextRules: [
+        (v) => !!v || "Нужно указать гражданство",
+        (v) =>
+          !!this.validCitizenText(v) ||
+          "Вашего гражданства в списках не существует",
+      ],
       citizenships: [],
       citizenshipsList: [],
       isShowListItem: false,
@@ -80,11 +87,47 @@ export default {
     throttleMethod: throttle(function () {
       this.filteredCitizenships();
     }, 1000),
+    emitCitizen() {
+      this.$emit("isCitizenship", this.citizenshipText);
+    },
+    handleClickListItem(citizenship) {
+      this.citizenshipText = citizenship.nationality;
+      this.isShowListItem = false;
+      this.$refs.citizenshipFieldText.focus();
+    },
+    capitalize(text) {
+      let out = "";
+      out = text
+        .split(" ")
+        .map((word) => {
+          if (word.length > 0) {
+            return word[0].toUpperCase() + word.slice(1);
+          }
+          return "";
+        })
+        .join(" ");
+      return out;
+    },
+    validCitizenText(citizenshipText) {
+      return citizenships.find(
+        (item) =>
+          item.nationality.toLowerCase() === citizenshipText.toLowerCase()
+      );
+    },
+    handlerOutsideClickList() {
+      this.isShowListItem = false;
+    },
   }, //end methods
   watch: {
-    selectedItem() {
-      this.citizenshipText =
-        this.citizenshipsList[this.selectedItem].nationality;
+    citizenshipText: function () {
+      if (this.citizenshipText !== this.capitalize(this.citizenshipText)) {
+        this.citizenshipText = this.capitalize(this.citizenshipText);
+      }
+      if (this.validCitizenText(this.citizenshipText)) {
+        this.$emit("titleCitizenship", this.citizenshipText);
+      } else {
+        this.$emit("titleCitizenship", false);
+      }
     },
   },
 };

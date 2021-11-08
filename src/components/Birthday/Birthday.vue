@@ -1,8 +1,8 @@
 <template>
   <v-row class="col-6">
     <v-text-field
-      v-model="dateOfBirth"
-      :rules="dateOfBirthRules"
+      v-model="date"
+      :rules="dateRules"
       label="Дата рождения"
       placeholder="дд.мм.гггг"
       class="datefield"
@@ -27,9 +27,9 @@ export default {
   name: "Birthday",
   data() {
     return {
-      dateOfBirth: "",
+      date: "",
       datePicker: "",
-      dateOfBirthRules: [(v) => this.dateOfBirthValidation(v)],
+      dateRules: [(v) => this.dateValidation(v)],
       isDatePickerShow: false,
     };
   },
@@ -40,7 +40,7 @@ export default {
     showDatePicker() {
       this.isDatePickerShow = !this.isDatePickerShow;
     },
-    dateOfBirthValidation(v) {
+    dateValidation(v) {
       if (/[0-3]\d\.[0-1]\d\.[1-2][0-9]\d\d/.test(v)) {
         let [date, month, year] = v.split(".");
         if (
@@ -71,7 +71,7 @@ export default {
     datePicker: function () {
       if (this.datePicker) {
         let [year, month, day] = this.datePicker.split("-");
-        this.dateOfBirth = format(new Date(year, month - 1, day), "dd.MM.yyyy");
+        this.date = format(new Date(year, month - 1, day), "dd.MM.yyyy");
       }
     },
   },
