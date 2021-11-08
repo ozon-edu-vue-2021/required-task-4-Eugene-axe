@@ -4,7 +4,7 @@
       v-model.lazy="email"
       :rules="emailRules"
       label="E-mail"
-      :validate-on-blur=true 
+      :validate-on-blur="true"
       required
     ></v-text-field
   ></v-row>
