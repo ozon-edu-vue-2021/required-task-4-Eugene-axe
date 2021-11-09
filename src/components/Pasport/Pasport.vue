@@ -11,6 +11,7 @@ t
 import Citizenship from "./Citizenship/Citizenship.vue";
 import RuPasportData from "./RuPasportData/RuPasportData.vue";
 import InternationalPasport from "./InternationalPasportData/InternationalPasportData.vue";
+import { RUSSIA } from "../../constants/citizenships";
 
 export default {
   name: "Pasport",
@@ -31,10 +32,10 @@ export default {
   },
   computed: {
     isRussian() {
-      return this.citizenTitle === "Russia";
+      return this.citizenTitle === RUSSIA;
     },
     isInternational() {
-      return !!this.citizenTitle && this.citizenTitle !== "Russia";
+      return !!this.citizenTitle && this.citizenTitle !== RUSSIA;
     },
   },
 };
