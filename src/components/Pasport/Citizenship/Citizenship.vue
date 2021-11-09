@@ -2,12 +2,11 @@
   <v-row class="d-flex">
     <v-text-field
       ref="citizenshipFieldText"
-      v-model="citizenshipText"
-      :rules="citizenshipTextRules"
+      v-model="citizenshipTitle"
+      :rules="citizenshipTitleRules"
       label="Гражданство"
       class="flex-grow-1 align-self-start citizenship-textfield"
-      @keyup="throttleMethod()"
-      @keyup.enter="emitCitizen"
+      @keyup="throttleFilterdList()"
       @click="isShowListItem = true"
       required
       validate-on-blur
@@ -44,12 +43,11 @@ export default {
   name: "Citizenship",
   data() {
     return {
-      selectedItem: null,
-      citizenshipText: "",
-      citizenshipTextRules: [
+      citizenshipTitle: "",
+      citizenshipTitleRules: [
         (v) => !!v || "Нужно указать гражданство",
         (v) =>
-          !!this.validCitizenText(v) ||
+          this.validCitizenshipTitle(v) ||
           "Вашего гражданства в списках не существует",
       ],
       citizenships: [],
@@ -74,44 +72,47 @@ export default {
         return 0;
       });
     },
-    filteredCitizenships() {
+    filteredCitizenshipsList() {
       this.citizenshipsList = this.citizenships.filter((item) => {
         return item.nationality
           .toLowerCase()
-          .includes(this.citizenshipText.toLowerCase());
+          .includes(this.citizenshipTitle.toLowerCase());
       });
     },
     includeField() {
       return [document.querySelector(".citizenship-textfield")];
     },
-    throttleMethod: throttle(function () {
-      this.filteredCitizenships();
+    throttleFilterdList: throttle(function () {
+      this.filteredCitizenshipsList();
     }, 1000),
-    emitCitizen() {
-      this.$emit("isCitizenship", this.citizenshipText);
+    emitCitizenshipTitle() {
+      this.$emit(
+        "citizenshipTitle",
+        this.validCitizenshipTitle(this.citizenshipTitle)
+          ? this.citizenshipTitle
+          : false
+      );
     },
     handleClickListItem(citizenship) {
-      this.citizenshipText = citizenship.nationality;
+      this.citizenshipTitle = citizenship.nationality;
       this.isShowListItem = false;
       this.$refs.citizenshipFieldText.focus();
     },
     capitalize(text) {
-      let out = "";
-      out = text
+      return text
         .split(" ")
         .map((word) => {
           if (word.length > 0) {
-            return word[0].toUpperCase() + word.slice(1);
+            return word[0].toUpperCase() + word.slice(1).toLowerCase();
           }
           return "";
         })
         .join(" ");
-      return out;
     },
-    validCitizenText(citizenshipText) {
-      return citizenships.find(
+    validCitizenshipTitle(citizenshipTitle) {
+      return !!citizenships.find(
         (item) =>
-          item.nationality.toLowerCase() === citizenshipText.toLowerCase()
+          item.nationality.toLowerCase() === citizenshipTitle.toLowerCase()
       );
     },
     handlerOutsideClickList() {
@@ -119,15 +120,9 @@ export default {
     },
   }, //end methods
   watch: {
-    citizenshipText: function () {
-      if (this.citizenshipText !== this.capitalize(this.citizenshipText)) {
-        this.citizenshipText = this.capitalize(this.citizenshipText);
-      }
-      if (this.validCitizenText(this.citizenshipText)) {
-        this.$emit("titleCitizenship", this.citizenshipText);
-      } else {
-        this.$emit("titleCitizenship", false);
-      }
+    citizenshipTitle: function () {
+      this.citizenshipTitle = this.capitalize(this.citizenshipTitle);
+      this.emitCitizenshipTitle();
     },
   },
 };

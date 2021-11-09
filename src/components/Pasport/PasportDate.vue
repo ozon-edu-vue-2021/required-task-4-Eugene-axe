@@ -22,6 +22,7 @@
 
 <script>
 import Birthday from "../Birthday/Birthday.vue";
+
 export default {
   name: "PasportDate",
   mixins: [Birthday],

@@ -1,7 +1,7 @@
 <template>
   <v-row no-gutters>
     <v-text-field
-      v-model.lazy="email"
+      v-model="email"
       :rules="emailRules"
       label="E-mail"
       validate-on-blur

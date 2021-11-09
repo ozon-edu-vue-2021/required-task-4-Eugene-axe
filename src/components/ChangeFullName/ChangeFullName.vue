@@ -5,15 +5,16 @@
       <v-radio label="Нет" :value="false"></v-radio>
       <v-radio label="Да" :value="true"></v-radio>
     </v-radio-group>
+
     <v-row v-if="isChange">
       <v-text-field
-        label="Старая фамилия"
+        label="Предыдущая фамилия"
         v-model="oldSurname"
         :rules="oldSurnameRules"
         class="mr-8"
       ></v-text-field>
       <v-text-field
-        label="Старое имя"
+        label="Предыдущее имя"
         v-model="oldName"
         :rules="oldNameRules"
       ></v-text-field>

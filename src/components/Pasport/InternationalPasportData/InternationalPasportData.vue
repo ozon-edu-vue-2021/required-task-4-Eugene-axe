@@ -33,7 +33,7 @@
           label="Страна выдачи"
           v-model="countryName"
           @click="isShowList = true"
-          @keydown="trottleKeyPress()"
+          @keydown="trottleFilteredList()"
           class="country-name"
         ></v-text-field>
         <v-list
@@ -118,7 +118,7 @@ export default {
         item.nationality.toLowerCase().includes(this.countryName.toLowerCase())
       );
     },
-    trottleKeyPress: throttle(function () {
+    trottleFilteredList: throttle(function () {
       this.filteredListCitizenships();
     }, 1000),
   }, // end methods
