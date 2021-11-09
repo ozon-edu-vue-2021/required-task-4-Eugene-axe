@@ -7,11 +7,13 @@
     <Gender />
     <Pasport />
     <ChangeFullName />
-
-    <v-btn :disabled="!valid" color="success" class="mr-4" @click="validate">
-      Validate
-    </v-btn>
-    <v-btn @click="send"> Send </v-btn>
+    <v-row>
+      <v-btn @click="send" v-if="valid"> send </v-btn>
+      <v-btn @click="validate" v-else> try send </v-btn>
+      <v-alert v-if="valid" dense text type="success">
+        Успешная валидация
+      </v-alert>
+    </v-row>
   </v-form>
 </template>
 
@@ -45,7 +47,7 @@ export default {
         return acc;
       }, {});
       console.log(JSON.stringify(sendData));
-      console.log(this);
+      this.validate();
     },
   },
 };

@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <p>Меняли ли фамилию или имя?</p>
+    <div class="text-h6">Меняли ли фамилию или имя?</div>
     <v-radio-group
       row
       v-model="isChange"
@@ -36,7 +36,7 @@ export default {
   data() {
     return {
       isChange: null,
-      isChangeRules: [(v) => (v === null ? "Заполните поле" : true)],
+      isChangeRules: [(v) => (v === null ? "Выберите одно из полей" : true)],
       oldSurname: "",
       oldSurnameRules: [
         (v) => !!v || "Введите предыдущую фамилию",
