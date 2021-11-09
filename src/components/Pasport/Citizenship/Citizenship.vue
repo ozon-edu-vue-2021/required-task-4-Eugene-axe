@@ -7,7 +7,7 @@
       :rules="citizenshipTitleRules"
       label="Гражданство"
       class="flex-grow-1 align-self-start citizenship-textfield"
-      @keyup="throttleFilterdList()"
+      @keyup="throttleFilteredList"
       @keyup.enter="emitCitizenshipTitle()"
       @click="isShowListItem = true"
       required
@@ -39,7 +39,7 @@
 
 <script>
 import citizenships from "../../../assets/data/citizenships.json";
-import throttle from "lodash.throttle";
+import throttle from "../../../helpers/throttle";
 
 export default {
   name: "Citizenship",
@@ -55,12 +55,15 @@ export default {
       citizenships: [],
       citizenshipsList: [],
       isShowListItem: false,
+      throttleFilteredList: null,
     };
   },
   created() {
     this.nationalitySort(citizenships);
     this.citizenships = citizenships;
     this.citizenshipsList = this.citizenships;
+    //
+    this.throttleFilteredList = throttle(this.filteredCitizenshipsList, 1000);
   },
   methods: {
     nationalitySort(array) {
@@ -84,9 +87,6 @@ export default {
     includeField() {
       return [document.querySelector(".citizenship-textfield")];
     },
-    throttleFilterdList: throttle(function () {
-      this.filteredCitizenshipsList();
-    }, 1000),
     emitCitizenshipTitle() {
       let title = this.capitalize(this.citizenshipTitle);
       this.$emit(
