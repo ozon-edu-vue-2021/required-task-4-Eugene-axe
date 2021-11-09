@@ -2,6 +2,7 @@
   <v-container>
     <v-text-field
       v-model="date"
+      id="rupas-date"
       :rules="dateRules"
       label="Дата выдачи"
       placeholder="дд.мм.гггг"

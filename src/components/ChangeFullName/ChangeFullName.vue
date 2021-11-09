@@ -1,7 +1,13 @@
 <template>
   <v-container>
     <p>Меняли ли фамилию или имя?</p>
-    <v-radio-group row v-model="isChange">
+    <v-radio-group
+      row
+      v-model="isChange"
+      required
+      :rules="isChangeRules"
+      id="isChangeName"
+    >
       <v-radio label="Нет" :value="false"></v-radio>
       <v-radio label="Да" :value="true"></v-radio>
     </v-radio-group>
@@ -10,11 +16,13 @@
       <v-text-field
         label="Предыдущая фамилия"
         v-model="oldSurname"
+        id="oldSurname"
         :rules="oldSurnameRules"
         class="mr-8"
       ></v-text-field>
       <v-text-field
         label="Предыдущее имя"
+        id="oldName"
         v-model="oldName"
         :rules="oldNameRules"
       ></v-text-field>
@@ -27,7 +35,8 @@ export default {
   name: "ChangeFullName",
   data() {
     return {
-      isChange: false,
+      isChange: null,
+      isChangeRules: [(v) => (v === null ? "Заполните поле" : true)],
       oldSurname: "",
       oldSurnameRules: [
         (v) => !!v || "Введите предыдущую фамилию",

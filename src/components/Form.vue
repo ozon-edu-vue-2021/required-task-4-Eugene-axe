@@ -11,6 +11,7 @@
     <v-btn :disabled="!valid" color="success" class="mr-4" @click="validate">
       Validate
     </v-btn>
+    <v-btn @click="send"> Send </v-btn>
   </v-form>
 </template>
 
@@ -37,6 +38,14 @@ export default {
   methods: {
     validate() {
       this.$refs.form.validate();
+    },
+    send() {
+      const sendData = this.$refs.form.inputs.reduce((acc, input) => {
+        acc[input.id] = input.value;
+        return acc;
+      }, {});
+      console.log(JSON.stringify(sendData));
+      console.log(this);
     },
   },
 };

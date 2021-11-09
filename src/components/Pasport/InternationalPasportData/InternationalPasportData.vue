@@ -3,6 +3,7 @@
     <v-row class="flex-nowrap">
       <v-text-field
         v-model="surname"
+        id="intpas-surname"
         :rules="surnameRules"
         label="Фамилия на латнице"
         required
@@ -10,6 +11,7 @@
       ></v-text-field>
       <v-text-field
         v-model="name"
+        id="intpas-name"
         :rules="nameRules"
         label="Имя на латнице"
         required
@@ -22,6 +24,8 @@
       <v-container>
         <v-text-field
           v-model="pasNumber"
+          :rules="pasNumberRules"
+          id="intpas-number"
           label="Номер паспорта"
           required
           class="mr-4"
@@ -32,6 +36,8 @@
         <v-text-field
           label="Страна выдачи"
           v-model="countryName"
+          :rules="countryNameRules"
+          id="intpas-countryofissue"
           @click="isShowList = true"
           @keydown="trottleFilteredList()"
           class="country-name"
@@ -60,6 +66,8 @@
       </v-container>
       <v-container>
         <v-select
+          :rules="pasTypeRules"
+          id="intpas-type"
           :items="passportTypesOnlyTypes"
           label="Тип паспорта"
         ></v-select>
@@ -92,6 +100,10 @@ export default {
       filterListCitizenships: [],
       passportTypes: [],
       countryName: "",
+      countryNameRules: [(v) => !!v || "Заполните поле"],
+      pasTypeRules: [(v) => !!v || "Заполните поле"],
+      pasNumberRules: [(v) => !!v || "Заполните поле"],
+
       isShowList: false,
     };
   }, //end data

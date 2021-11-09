@@ -2,6 +2,7 @@
   <v-row class="col-6">
     <v-text-field
       v-model="date"
+      id="birthday"
       :rules="dateRules"
       label="Дата рождения"
       placeholder="дд.мм.гггг"

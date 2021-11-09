@@ -3,6 +3,7 @@
     <v-text-field
       ref="citizenshipFieldText"
       v-model="citizenshipTitle"
+      id="citizenship"
       :rules="citizenshipTitleRules"
       label="Гражданство"
       class="flex-grow-1 align-self-start citizenship-textfield"

@@ -4,6 +4,7 @@
       v-model="surname"
       :rules="surnameRules"
       label="Фамилия"
+      id="surname"
       required
       class="mr-4"
     ></v-text-field>
@@ -12,12 +13,14 @@
       v-model="name"
       :rules="nameRules"
       label="Имя"
+      id="name"
       required
       class="mr-4"
     ></v-text-field>
 
     <v-text-field
       v-model="patronymic"
+      id="patronymic"
       :rules="patronymicRules"
       label="Отчество"
       required

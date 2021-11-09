@@ -2,6 +2,7 @@
   <v-row no-gutters>
     <v-text-field
       v-model="email"
+      id="email"
       :rules="emailRules"
       label="E-mail"
       validate-on-blur

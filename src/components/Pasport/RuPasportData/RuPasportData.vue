@@ -4,6 +4,7 @@
       <v-container>
         <v-text-field
           v-model="series"
+          id="rupas-series"
           :rules="seriesRules"
           label="Серия"
           required
@@ -15,6 +16,7 @@
       <v-container>
         <v-text-field
           v-model="number"
+          id="rupas-number"
           :rules="numberRules"
           label="Номер"
           required
