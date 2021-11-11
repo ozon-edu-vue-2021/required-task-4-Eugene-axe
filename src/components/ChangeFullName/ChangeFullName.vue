@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import { regxCirillicLetter } from '../../constants/regularExpression';
+import { REGX_CIRILLIC_LATTERS } from '../../constants/regularExpression';
 
 export default {
   name: "ChangeFullName",
@@ -53,8 +53,7 @@ export default {
   },
   methods: {
     validateCirillic(v) {
-      // return /^[а-яё]+$/iu.test(v) || "используйте кириллицу";
-      return regxCirillicLetter.test(v) || "используйте кириллицу";
+      return REGX_CIRILLIC_LATTERS.test(v) || "используйте кириллицу";
     },
   },
 };

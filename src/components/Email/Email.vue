@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import { regxEmail } from '../../constants/regularExpression';
+import { REGX_EMAIL } from "../../constants/regularExpression";
 
 export default {
   name: "Email",
@@ -22,7 +22,7 @@ export default {
       isFocus: false,
       emailRules: [
         (v) => !!v || "E-mail необходим",
-        (v) => regxEmail.test(v) || "E-mail не валидный",
+        (v) => REGX_EMAIL.test(v) || "E-mail не валидный",
       ],
     };
   },

@@ -32,16 +32,16 @@
 </template>
 
 <script>
-import { regx4Digits, regx6Digits } from "../../../constants/regularExpression";
+import { REGX_4DIGIT, REGX_6DIGIT } from "../../../constants/regularExpression";
 import PasportDate from "../PasportDate.vue";
 export default {
   name: "RuPassportData",
   data() {
     return {
       series: "",
-      seriesRules: [(v) => regx4Digits.test(v) || "Должно быть 4 цифры"],
+      seriesRules: [(v) => REGX_4DIGIT.test(v) || "Должно быть 4 цифры"],
       number: "",
-      numberRules: [(v) => regx6Digits.test(v) || "Должно быть 6 цифр"],
+      numberRules: [(v) => REGX_6DIGIT.test(v) || "Должно быть 6 цифр"],
     };
   },
   components: {

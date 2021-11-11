@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <div class="text-h6">Паспортные данные</div>
-    <Citizenship @citizenshipId="handleCitizen($event)" />
+    <Citizenship @citizenshipId="handleCitizen" />
     <RuPasportData v-if="isRussian" />
     <InternationalPasport v-if="isInternational" />
   </v-container>

@@ -23,7 +23,7 @@
 
 <script>
 import { format } from "date-fns";
-import { regxDate } from '../../constants/regularExpression'
+import { REGX_DATE } from '../../constants/regularExpression'
 export default {
   name: "Birthday",
   data() {
@@ -42,7 +42,7 @@ export default {
       this.isDatePickerShow = !this.isDatePickerShow;
     },
     dateValidation(v) {
-      if (regxDate.test(v)) {
+      if (REGX_DATE.test(v)) {
         let [date, month, year] = v.split(".");
         if (
           new Date().getTime() - new Date(year, month - 1, date).getTime() >

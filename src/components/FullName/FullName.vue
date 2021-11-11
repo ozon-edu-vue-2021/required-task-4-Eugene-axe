@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import { regxCirillicLetter } from "../../constants/regularExpression";
+import { REGX_CIRILLIC_LATTERS } from "../../constants/regularExpression";
 
 export default {
   name: "FullName",
@@ -51,7 +51,7 @@ export default {
   },
   methods: {
     validateCirillic(v) {
-      return regxCirillicLetter.test(v) || "используйте кириллицу";
+      return REGX_CIRILLIC_LATTERS.test(v) || "используйте кириллицу";
     },
   },
 };
