@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <div class="text-h6">Паспортные данные</div>
-    <Citizenship @citizenshipTitle="hadleCitizen($event)" />
+    <Citizenship @citizenshipId="handleCitizen($event)" />
     <RuPasportData v-if="isRussian" />
     <InternationalPasport v-if="isInternational" />
   </v-container>
@@ -17,7 +17,7 @@ export default {
   name: "Pasport",
   data() {
     return {
-      citizenTitle: "",
+      citizenId: "",
     };
   },
   components: {
@@ -26,16 +26,16 @@ export default {
     InternationalPasport,
   },
   methods: {
-    hadleCitizen(value) {
-      this.citizenTitle = value;
+    handleCitizen(value) {
+      this.citizenId = value;
     },
   },
   computed: {
     isRussian() {
-      return this.citizenTitle === RUSSIA;
+      return this.citizenId === RUSSIA;
     },
     isInternational() {
-      return !!this.citizenTitle && this.citizenTitle !== RUSSIA;
+      return !!this.citizenId && this.citizenId !== RUSSIA;
     },
   },
 };

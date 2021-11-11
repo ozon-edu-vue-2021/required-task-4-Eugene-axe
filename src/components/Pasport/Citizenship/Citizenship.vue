@@ -8,7 +8,7 @@
       label="Гражданство"
       class="flex-grow-1 align-self-start citizenship-textfield"
       @keyup="throttleFilteredList"
-      @keyup.enter="emitCitizenshipTitle()"
+      @keyup.enter="keyEmitCitizenshipTitle()"
       @click="isShowListItem = true"
       required
       validate-on-blur
@@ -86,19 +86,23 @@ export default {
     includeField() {
       return [document.querySelector(".citizenship-textfield")];
     },
-    emitCitizenshipTitle() {
+    keyEmitCitizenshipTitle() {
       let title = this.capitalize(this.citizenshipTitle);
+      let id = this.returnIdCitizenship(title);
       this.$emit(
-        "citizenshipTitle",
-        this.validCitizenshipTitle(title) ? title : false
+        "citizenshipId",
+        this.validCitizenshipTitle(title) ? id : false
       );
       this.citizenshipTitle = title;
     },
     handleClickListItem(citizenship) {
       this.citizenshipTitle = citizenship.nationality;
       this.isShowListItem = false;
-      this.emitCitizenshipTitle();
+      this.$emit("citizenshipId", citizenship.id);
       this.$refs.citizenshipFieldText.focus();
+    },
+    returnIdCitizenship(title) {
+      return this.citizenships.find((item) => item.nationality === title).id;
     },
     capitalize(text) {
       return text

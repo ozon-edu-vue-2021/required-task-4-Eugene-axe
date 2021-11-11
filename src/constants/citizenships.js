@@ -1,1 +1,1 @@
-export const RUSSIA = "Russia";
+export const RUSSIA = 8604;
