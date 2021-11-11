@@ -80,6 +80,7 @@
 import citizenships from "../../../assets/data/citizenships.json";
 import passportTypes from "../../../assets/data/passport-types.json";
 import throttle from "lodash.throttle";
+import { regxLatinLetters } from '../../../constants/regularExpression';
 
 export default {
   name: "InternationalPasport",
@@ -88,12 +89,12 @@ export default {
       name: "",
       nameRules: [
         (v) => !!v || "Введите имя",
-        (v) => /^[a-z]+$/iu.test(v) || "Только латинские буквы",
+        (v) => regxLatinLetters.test(v) || "Только латинские буквы",
       ],
       surname: "",
       surnameRules: [
         (v) => !!v || "Введите фамилию",
-        (v) => /^[a-z]+$/iu.test(v) || "Только латинские буквы",
+        (v) => regxLatinLetters.test(v) || "Только латинские буквы",
       ],
       pasNumber: "",
       citizenships: [],

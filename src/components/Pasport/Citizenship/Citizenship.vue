@@ -62,7 +62,6 @@ export default {
     this.nationalitySort(citizenships);
     this.citizenships = citizenships;
     this.citizenshipsList = this.citizenships;
-    //
     this.throttleFilteredList = throttle(this.filteredCitizenshipsList, 1000);
   },
   methods: {
